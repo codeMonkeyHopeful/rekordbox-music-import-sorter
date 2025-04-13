@@ -3,10 +3,8 @@ import shutil
 from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 from mutagen import File as MutagenFile
+from .settings import SOURCE_FOLDER, GENRE_FOLDER, ENERGY_FOLDER
 
-SOURCE_FOLDER = "/Volumes/Rekordbox SSD/_Unsorted"
-GENRE_FOLDER = "/Volumes/Rekordbox SSD/Organized"
-ENERGY_FOLDER = "/Volumes/Rekordbox SSD/Energy"
 
 CAMELOT_KEYS = {
     "C": "8B",
