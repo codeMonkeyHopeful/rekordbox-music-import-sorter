@@ -4,6 +4,10 @@ from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 from mutagen import File as MutagenFile
 
+SOURCE_FOLDER = "/Volumes/Rekordbox SSD/_Unsorted"
+GENRE_FOLDER = "/Volumes/Rekordbox SSD/Organized"
+ENERGY_FOLDER = "/Volumes/Rekordbox SSD/Energy"
+
 CAMELOT_KEYS = {
     "C": "8B",
     "C#": "3B",
@@ -40,10 +44,6 @@ CAMELOT_KEYS = {
     "Bbm": "3A",
     "Bm": "10A",
 }
-
-SOURCE_FOLDER = "/Volumes/Rekordbox SSD/_Unsorted"
-GENRE_FOLDER = "/Volumes/Rekordbox SSD/Organized"
-ENERGY_FOLDER = "/Volumes/Rekordbox SSD/Energy"
 
 
 def get_energy_level(bpm):
