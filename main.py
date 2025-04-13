@@ -59,7 +59,8 @@ def get_energy_level(bpm):
             return "Peak Time"
         else:
             return "After Hours"
-    except:
+    except Exception as e:
+        print(f"Error parsing BPM: {e}")
         return "Unknown"
 
 
@@ -69,8 +70,9 @@ def get_metadata(file_path):
         artist = tags.get("artist", ["Unknown Artist"])[0]
         title = tags.get("title", ["Unknown Title"])[0]
         genre = tags.get("genre", ["Unknown"])[0]
-    except:
+    except Exception as e:
         artist, title, genre = "Unknown Artist", "Unknown Title", "Unknown"
+        print(f"Error reading tags: {e}")
 
     # Key
     try:
@@ -100,9 +102,8 @@ def organize_files():
                 full_path = os.path.join(root, file)
                 artist, title, genre, bpm, key = get_metadata(full_path)
 
-                filename = f"{artist} - {title} [{bpm}BPM - {key}].mp3".replace(
-                    "/", "-"
-                )
+                filename = f"{artist} - {title} " f"[{bpm}BPM - {key}].mp3"
+                filename = filename.replace("/", "-")
 
                 # GENRE folder copy
                 genre_path = os.path.join(GENRE_FOLDER, genre)
