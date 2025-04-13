@@ -78,14 +78,17 @@ def get_metadata(file_path):
         key_raw = audio.get("TKEY", [""])[0]
         key = key_raw.strip()
         camelot = CAMELOT_KEYS.get(key, key) if key else "UnknownKey"
-    except:
+    except Exception as e:
+
         camelot = "UnknownKey"
+        print(f"Error reading key: {e}")
 
     # BPM
     try:
         bpm = int(MP3(file_path).info.bpm)
-    except:
+    except Exception as e:
         bpm = "???"
+        print(f"Error reading BPM: {e}")
 
     return artist.strip(), title.strip(), genre.strip(), bpm, camelot
 
