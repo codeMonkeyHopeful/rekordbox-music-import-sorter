@@ -3,7 +3,7 @@ import shutil
 from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 from mutagen import File as MutagenFile
-from .settings import SOURCE_FOLDER, GENRE_FOLDER, ENERGY_FOLDER
+from settings import SOURCE_FOLDER, GENRE_FOLDER, ENERGY_FOLDER
 
 
 CAMELOT_KEYS = {
@@ -83,8 +83,9 @@ def get_metadata(file_path):
         camelot = "UnknownKey"
         print(f"Error reading key: {e}")
 
-    # BPM
+    # BPM - May have to be careful on what key we pull
     try:
+        print(MP3(file_path).info)
         bpm = int(MP3(file_path).info.bpm)
     except Exception as e:
         bpm = "???"
@@ -108,8 +109,7 @@ def organize_files():
                 os.makedirs(genre_path, exist_ok=True)
                 genre_dest = os.path.join(genre_path, filename)
                 if not os.path.exists(genre_dest):
-                    print(f"Copying to genre: {genre_dest}")
-                    shutil.copy2(full_path, genre_dest)
+                    shutil.copy2(full_path, genre_path)
 
                 # ENERGY folder copy
                 energy_level = get_energy_level(bpm)
@@ -118,7 +118,7 @@ def organize_files():
                 energy_dest = os.path.join(energy_path, filename)
                 if not os.path.exists(energy_dest):
                     print(f"Copying to energy: {energy_dest}")
-                    shutil.copy2(full_path, energy_dest)
+                    shutil.copy2(full_path, energy_path)
 
 
 if __name__ == "__main__":
