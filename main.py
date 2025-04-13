@@ -72,9 +72,11 @@ def get_metadata(file_path):
         artist, title, genre = "Unknown Artist", "Unknown Title", "Unknown"
         print(f"Error reading tags: {e}")
 
+    audio = MutagenFile(file_path)
+
     # Key
     try:
-        audio = MutagenFile(file_path)
+
         key_raw = audio.get("TKEY", [""])[0]
         key = key_raw.strip()
         camelot = CAMELOT_KEYS.get(key, key) if key else "UnknownKey"
@@ -85,11 +87,16 @@ def get_metadata(file_path):
 
     # BPM - May have to be careful on what key we pull
     try:
-        print(MP3(file_path).info)
         bpm = int(MP3(file_path).info.bpm)
     except Exception as e:
         bpm = "???"
         print(f"Error reading BPM: {e}")
+
+        # Try to extract TBPM tag safely, we didn't get it from above
+        if audio.tags and bpm == "???" and "TBPM" in audio:
+            bpm = audio["TBPM"].text[0]
+        else:
+            print("No BPM tag found.")
 
     return artist.strip(), title.strip(), genre.strip(), bpm, camelot
 
